@@ -55,18 +55,25 @@ export default function VolumeDetailPage() {
   }, [volumeId])
 
   const formatSize = (size: number): string => {
-    if (size === 0) return 'N/A'
-    const units = ['B', 'KB', 'MB', 'GB']
-    let formattedSize = size
-    let unitIndex = 0
-    
+    // Check if size is a valid number
+    if (typeof size !== 'number' || isNaN(size) || size < 0) return 'N/A';
+    if (size === 0) return '0 B';
+  
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let formattedSize = size;
+    let unitIndex = 0;
+  
+    // Convert size to the appropriate unit
     while (formattedSize >= 1024 && unitIndex < units.length - 1) {
-      formattedSize /= 1024
-      unitIndex++
+      formattedSize /= 1024;
+      unitIndex++;
     }
-    
-    return `${formattedSize.toFixed(2)} ${units[unitIndex]}`
-  }
+  
+    // Ensure formattedSize is a number before calling toFixed
+    if (typeof formattedSize !== 'number' || isNaN(formattedSize)) return 'N/A';
+  
+    return `${formattedSize.toFixed(2)} ${units[unitIndex]}`;
+  };
 
   return (
     <DashboardLayout>

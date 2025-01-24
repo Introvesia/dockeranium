@@ -158,14 +158,18 @@ export default function ContainerDetailPage() {
               <div className="space-y-4">
                 <h3 className="text-lg font-medium">Network Settings</h3>
                 <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                  {Object.entries(container.networkSettings.Networks).map(([network, settings]) => (
-                    <div key={network} className="border-b last:border-0 pb-2">
-                      <p><span className="font-medium">Network:</span> {network}</p>
-                      <p><span className="font-medium">IP Address:</span> {settings.IPAddress}</p>
-                      <p><span className="font-medium">Gateway:</span> {settings.Gateway}</p>
-                      <p><span className="font-medium">MAC Address:</span> {settings.MacAddress}</p>
-                    </div>
-                  ))}
+                  {container.networkSettings && typeof container.networkSettings === 'object' && container.networkSettings.Networks && typeof container.networkSettings.Networks === 'object' ? (
+                    Object.entries(container.networkSettings.Networks).map(([network, settings]) => (
+                      <div key={network} className="border-b last:border-0 pb-2">
+                        <p><span className="font-medium">Network:</span> {network}</p>
+                        <p><span className="font-medium">IP Address:</span> {settings.IPAddress}</p>
+                        <p><span className="font-medium">Gateway:</span> {settings.Gateway}</p>
+                        <p><span className="font-medium">MAC Address:</span> {settings.MacAddress}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No network settings available.</p>
+                  )}
                 </div>
               </div>
             </div>
